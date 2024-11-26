@@ -2,17 +2,22 @@ package com.learning.socialmediablog.social_media_blog_app.service.Impl;
 
 import com.learning.socialmediablog.social_media_blog_app.dto.PostDto;
 import com.learning.socialmediablog.social_media_blog_app.entity.PostEntity;
+import com.learning.socialmediablog.social_media_blog_app.exception.ResourceNotFoundException;
 import com.learning.socialmediablog.social_media_blog_app.repository.PostRepository;
 import com.learning.socialmediablog.social_media_blog_app.service.PostService;
 import com.learning.socialmediablog.social_media_blog_app.utils.PostEntityMapper;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
+
+   // private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(PostServiceImpl.class);
 
     @Autowired
     private PostRepository postRepository;
@@ -45,11 +50,30 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePost(PostDto postDto, long postIdToBeUpdated) {
-        return null;
+        PostEntity postEntityToBeUpdated = this.postRepository.findById(postIdToBeUpdated).orElseThrow(()-> new RuntimeException("Post not found by id: " + postIdToBeUpdated));
+
+        postEntityToBeUpdated.setContent(postDto.getContent());
+        postEntityToBeUpdated.setTitle(postDto.getTitle());
+        postEntityToBeUpdated.setDescription(postDto.getDescription());
+
+        PostEntity postEntityUpdated = this.postRepository.save(postEntityToBeUpdated);
+        return this.postEntityMapper.mapPostEntityToPostDto(postEntityUpdated);
     }
 
     @Override
     public boolean deletePostById(long postIdToBeDeleted) {
-        return false;
+//       this.postRepository.deleteById(postIdToBeDeleted);
+//       return true;
+
+        //second way
+        try {
+
+           PostEntity postEntity = this.postRepository.findById(postIdToBeDeleted).orElseThrow(()-> new ResourceNotFoundException("Post not found by id: " + postIdToBeDeleted));
+            this.postRepository.delete(postEntity);
+        }catch (Exception e){
+            //LOGGER.error("Exception while deleting the post by Id: {} " , postIdToBeDeleted);
+            return false;
+        }
+        return true;
     }
 }

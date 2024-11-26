@@ -3,6 +3,8 @@ package com.learning.socialmediablog.social_media_blog_app.controller;
 import com.learning.socialmediablog.social_media_blog_app.dto.PostDto;
 import com.learning.socialmediablog.social_media_blog_app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +38,24 @@ public class PostController {
     }
 
     //update post
+    //v1/api/posts/{postId}
+    @PutMapping("/{postId}")
+    public PostDto updatePost(@RequestBody PostDto postDtoToBeUpdated, @PathVariable long postId){
+        return this.postService.updatePost(postDtoToBeUpdated,postId);
+    }
+
 
     //delete post
+    //v1/api/posts/{postId}
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable long postId){
+        boolean isDeleted = this.postService.deletePostById(postId);
+        if (isDeleted){
+
+            return ResponseEntity.ok("Post " + postId + " delete successfully");
+        }else {
+            return new ResponseEntity<>("Error while deleting Post " + postId , HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
