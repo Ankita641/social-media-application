@@ -12,6 +12,8 @@ public interface PostService {
 
     PostResponse getAllPosts(int pageNo, int pageSize);
 
+    PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDirection);
+
     //Get post by id
     PostDto getPostById(long id);
 

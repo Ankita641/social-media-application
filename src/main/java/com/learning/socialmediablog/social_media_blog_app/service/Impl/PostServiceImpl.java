@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,36 @@ public class PostServiceImpl implements PostService {
     public PostResponse getAllPosts(int pageNo, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<PostEntity> postEntityList = postRepository.findAll(pageable);
+
+        if (postEntityList != null){
+
+            List<PostDto> postDtoList = postEntityList.stream().map(postEntity -> this.postEntityMapper.mapPostEntityToPostDto(postEntity)).collect(Collectors.toList());
+
+            PostResponse postResponse = PostResponse.builder()
+                    .content(postDtoList)
+                    .pageNo(postEntityList.getNumber())
+                    .pageSize(postEntityList.getSize())
+                    .totalElements(postEntityList.getTotalElements())
+                    .totalPages(postEntityList.getTotalPages())
+                    .isLastPage(postEntityList.isLast())
+                    .build();
+
+            return postResponse;
+        }
+        return null;
+    }
+
+    @Override
+    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDirection) {
+        Pageable pageable = null;
+
+        if(sortBy != null && sortDirection != null){
+            Sort sort = sortDirection.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+            pageable = PageRequest.of(pageNo,pageSize,sort);
+        }else {
+            pageable = PageRequest.of(pageNo,pageSize);
+        }
         Page<PostEntity> postEntityList = postRepository.findAll(pageable);
 
         if (postEntityList != null){
