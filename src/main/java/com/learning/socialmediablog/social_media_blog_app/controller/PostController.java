@@ -27,8 +27,9 @@ public class PostController {
     //v1/api/posts/{postId}
     @GetMapping("/{postId}")
     public PostDto fetchPostById(@PathVariable long postId){
-       return this.postService.getPostById(postId);
+        return this.postService.getPostById(postId);
     }
+
 
     //create post
     //v1/api/posts
