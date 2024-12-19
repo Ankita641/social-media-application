@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 //update/delete operation both need @Modifying , @Transactional and @Query
+//In JPA have generic method save, delete, deleteById
+//but if we want custom requirement like in manyToOne or OneToMany relationship type then we need define custom methods use native Query there like findByPostId and deleteByPstId
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 
