@@ -22,7 +22,7 @@ import org.springdoc.core.GroupedOpenApi;
                         url = "https://ankitaportfolio.com"
                 )
         ),
-        servers = @Server(url = "http://localhost:8080/v1/api", description = "Local Server")
+        servers = @Server(url = "http://localhost:8080", description = "Local Server")
 )
 public class SwaggerConfig {
 
