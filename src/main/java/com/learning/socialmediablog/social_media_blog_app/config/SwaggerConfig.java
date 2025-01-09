@@ -21,8 +21,8 @@ import org.springdoc.core.GroupedOpenApi;
                         email = "ankitak9891@gmail.com",
                         url = "https://ankitaportfolio.com"
                 )
-        ),
-        servers = @Server(url = "http://localhost:8080", description = "Local Server")
+        )
+//        servers = @Server(url = "http://localhost:8080", description = "Local Server")
 )
 public class SwaggerConfig {
 
