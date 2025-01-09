@@ -12,9 +12,9 @@ import org.springdoc.core.GroupedOpenApi;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "Social Media Blog API",
+                title = "Social Media API",
                 version = "v1.0",
-                description = "This API allows users to create, fetch, update, and delete posts and comments on a social media blog platform.",
+                description = "This API allows users to create, fetch, update, and delete posts and comments on a social media platform.",
                // license = @License(name = "MIT", url = "https://opensource.org/licenses/MIT"),
                 contact = @Contact(
                         name = "Ankita Patel",
