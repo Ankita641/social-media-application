@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SocialMediaBlogAppApplication {
+public class SocialMediaApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(SocialMediaBlogAppApplication.class, args);
+		SpringApplication.run(SocialMediaApplication.class, args);
 	}
 
 }
