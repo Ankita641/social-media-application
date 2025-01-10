@@ -3,11 +3,9 @@ package com.learning.socialmediablog.social_media_blog_app.config;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.context.annotation.Configuration;
-import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Bean;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 
 @Configuration
 @OpenAPIDefinition(

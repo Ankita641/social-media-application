@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class CommentController {
             @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
     })
     @PostMapping("/posts/{postId}/comments")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CommentDto> createComment(@Parameter(description = "Post ID to create a new Comment", required = true)
                                                         @PathVariable long postId,
                                                     @Parameter(description = "Comment details to be added", required = true)
@@ -85,6 +87,7 @@ public class CommentController {
             @ApiResponse(responseCode = "400", description = "Bad Request")
     })
     @PutMapping("/posts/{postId}/comments/{commentId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CommentDto> updateCommentByPostIdAndCommentId(@Parameter(description = "ID of the Post", required = true) @PathVariable long postId,
                                                                         @Parameter(description = "ID of the Comment to update", required = true) @PathVariable long commentId,
                                                                         @Parameter(description = "Updated Comment Details", required = true) @Valid @RequestBody CommentDto commentDto) {
@@ -102,6 +105,7 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "Comment or Post not found", content = @Content)
     })
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteCommentByPostIdAndCommentId(@Parameter(description = "ID of the Post", required = true) @PathVariable long postId,
                                                                     @Parameter(description = "ID of the Comment", required = true) @PathVariable long commentId) {
         String message = this.commentService.deleteCommentByPostIdCommentId(postId, commentId);
@@ -115,6 +119,7 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
     })
     @DeleteMapping("/posts/{postId}/comments")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteAllCommentsByPostId(@Parameter(description = "ID of the Post to delete all Comments", required = true) @PathVariable long postId) {
         String message = this.commentService.deleteAllCommentsOfPostsFromPostId(postId);
         return new ResponseEntity<>(message, HttpStatus.OK);
