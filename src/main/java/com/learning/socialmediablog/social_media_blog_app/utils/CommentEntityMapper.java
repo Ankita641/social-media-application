@@ -32,7 +32,6 @@ public class CommentEntityMapper {
     return null;
     }
 
-
     public CommentEntity convertDtoToEntity(CommentDto commentDto) {
         if (commentDto != null){
 //            CommentEntity commentEntity = new CommentEntity();
